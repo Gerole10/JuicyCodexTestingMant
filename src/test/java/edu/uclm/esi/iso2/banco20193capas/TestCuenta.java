@@ -94,10 +94,27 @@ public class TestCuenta extends TestCase {
 		try {
 			cuenta.addTitular(pepe);
 			cuenta.ingresar(-1);
-			fail("Se ha producido ImporteInvalidoException");
 		} catch (CuentaYaCreadaException e) {
 		} catch (ImporteInvalidoException e) {
+			fail("Se ha producido ImporteInvalidoException");
 		} 
+	}
+	
+	@Test
+	public void testSetTitulares() {
+		Cliente pepe = new Cliente("12345X", "Pepe", "Pérez");
+		Cliente juan = new Cliente("34567Y","Juan","Gómez");
+		pepe.insert();
+		juan.insert();
+		List<Cliente> lista = new ArrayList<Cliente>();
+		lista.add(pepe);
+		lista.add(juan);
+		Cuenta cuenta = new Cuenta(1);
+		try {
+			cuenta.setTitulares(lista);
+		}catch(Exception e) {
+			
+		}
 	}
 
 	@Test
