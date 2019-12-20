@@ -9,15 +9,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaInvalidaException;
-import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaSinTitularesException;
-import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaYaCreadaException;
-import edu.uclm.esi.iso2.banco20193capas.exceptions.ImporteInvalidoException;
-import edu.uclm.esi.iso2.banco20193capas.exceptions.SaldoInsuficienteException;
-import edu.uclm.esi.iso2.banco20193capas.model.Cliente;
-import edu.uclm.esi.iso2.banco20193capas.model.Cuenta;
-import edu.uclm.esi.iso2.banco20193capas.model.Manager;
-import edu.uclm.esi.iso2.banco20193capas.model.TarjetaCredito;
+import edu.uclm.esi.iso2.banco20193capas.exceptions.*;
+import edu.uclm.esi.iso2.banco20193capas.model.*;
 import junit.framework.TestCase;
 
 @RunWith(SpringRunner.class)
@@ -313,4 +306,60 @@ public class TestCuenta extends TestCase {
 			fail("Excepción inesperada: " + e.getMessage());
 		}
 	}
+	@Test
+	public void testsetID() {
+		try {
+			Cuenta cuenta = new Cuenta(1);
+			cuenta.setId((long)1);
+		} catch(Exception e) {
+			fail("No se esperaba ninguna excepción");
+		}
+	}
+	
+	@Test
+	public void testIsCreada() {
+		Cuenta cuenta = new Cuenta(12);
+		Cliente pepe = new Cliente("12345fg","Pepe","Pérez");
+		try {
+			pepe.insert();
+			cuenta.addTitular(pepe);
+			cuenta.isCreada();
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	@Test
+	public void testClienteNoAutorizado() {
+		Cuenta cuenta = new Cuenta(23);
+		Cliente pepe = new Cliente("123456g","Pepe","Otero");
+		Cliente jesus = new Cliente("98765t","Jesús","Cabañero");
+		try {
+			pepe.insert();
+			jesus.insert();
+			cuenta.addTitular(pepe);
+			cuenta.insert();
+			TarjetaCredito tarjeta = new TarjetaCredito();
+			tarjeta = cuenta.emitirTarjetaCredito(jesus.getNif(), 5000);
+			tarjeta.setPin(1234);
+			tarjeta.sacarDinero(1234,1);
+		}catch(PinInvalidoException e) {
+			fail("Es por el pin");
+		}catch(CuentaYaCreadaException c) {
+			fail("Cuenta ya creada");
+		}catch(ClienteNoEncontradoException c) {
+			fail("Cliente no encontrado");
+		}catch(TarjetaBloqueadaException c) {
+			fail("Tarjeta bloqueada");
+		}catch(ClienteNoAutorizadoException c) {
+			
+		}catch(SaldoInsuficienteException c) {
+			fail("Saldo insuficiente");
+		}catch(ImporteInvalidoException c) {
+			fail("Importe invalido");
+		}catch(CuentaSinTitularesException e) {
+			fail("Cuenta sin titulares");
+		}
+	}
+	
 }
