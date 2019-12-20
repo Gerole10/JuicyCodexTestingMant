@@ -18,6 +18,7 @@ import edu.uclm.esi.iso2.banco20193capas.exceptions.ImporteInvalidoException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.PinInvalidoException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.SaldoInsuficienteException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.TarjetaBloqueadaException;
+import edu.uclm.esi.iso2.banco20193capas.exceptions.TokenInvalidoException;
 import edu.uclm.esi.iso2.banco20193capas.model.Cliente;
 import edu.uclm.esi.iso2.banco20193capas.model.TarjetaCredito;
 import junit.framework.TestCase;
@@ -136,6 +137,27 @@ public class TestTarjetaCredito extends TestCase{
 			tarjeta.setPin(1223);
 			tarjeta.comprar(1223, -0.2);
 		}catch(ImporteInvalidoException e) {
+			
+		}catch(Exception e) {
+			fail("No se esperaba esta excepción");
+		}
+	}
+	
+	@Test
+	public void testTokenInvalido() {
+		Cuenta cuenta = new Cuenta(23);
+		Cliente pepe = new Cliente("123456g","Pepe","Otero");
+		try {
+			pepe.insert();
+			cuenta.addTitular(pepe);
+			cuenta.insert();
+			TarjetaCredito tarjeta = cuenta.emitirTarjetaCredito("123456g", 100);
+			tarjeta.setPin(1223);
+			tarjeta.comprarPorInternet(1223, 50.0);
+			tarjeta.confirmarCompraPorInternet(2);
+		}catch(ImporteInvalidoException e) {
+			fail("No se esperaba esta excepción");
+		}catch(TokenInvalidoException e) {
 			
 		}catch(Exception e) {
 			fail("No se esperaba esta excepción");

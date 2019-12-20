@@ -362,4 +362,27 @@ public class TestCuenta extends TestCase {
 		}
 	}
 	
+	@Test
+	public void testClienteNoEncontrado() {
+		Cuenta cuenta = new Cuenta(23);
+		Cliente pepe = new Cliente("123456g","Pepe","Otero");
+		Cliente jesus = new Cliente("98765t","Jesús","Cabañero");
+		try {
+			Manager.getClienteDAO().deleteAll();
+			jesus.insert();
+			cuenta.addTitular(jesus);
+			cuenta.insert();
+			TarjetaDebito tarjeta = new TarjetaDebito();
+			tarjeta = cuenta.emitirTarjetaDebito(pepe.getNif());
+		}catch(CuentaYaCreadaException c) {
+			fail("Cuenta ya creada");
+		}catch(ClienteNoEncontradoException c) {
+			
+		}catch(ClienteNoAutorizadoException c) {
+			fail("No se esperaba esta excepción");
+		}catch(CuentaSinTitularesException e) {
+			fail("Cuenta sin titulares");
+		}
+	}
+	
 }
