@@ -80,4 +80,44 @@ public class TestTarjetaDebito extends TestCase {
 
     }
     
+    @Test
+    public void testSacarDinero() {
+     this.tdAna.setPin(0000);
+      try {
+    	 this.tdAna.comprar(0000,500);
+      }catch(ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+				| PinInvalidoException e) {
+      }
+    }
+    
+    @Test
+    public void testSacarDineroSinSaldo() {
+     this.tdAna.setPin(0000);
+      try {
+    	 this.tdAna.sacarDinero(0000, 500);
+    	 this.tdAna.sacarDinero(0000,10000000);
+    	 fail("Se espera SaldoInsuficienteException");
+      } catch (ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+				| PinInvalidoException e) {
+    	  
+      }
+    }
+    
+    @Test
+    public void testComprar() throws ImporteInvalidoException, SaldoInsuficienteException{
+     this.tdAna.setPin(0000);
+     this.cuentaAna.retirar(this.cuentaAna.getSaldo());
+     this.cuentaAna.ingresar(1000);
+      try {
+    	 this.tdAna.comprar(0000, 250);
+    	 this.tdAna.comprar(0000, 350);
+    	 this.tdAna.comprar(0000, 1250);
+    	 fail("Se espera ImporteInvalidoException");
+    	} catch (ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+				| PinInvalidoException e) {
+    		
+      }
+      
+    }
+    
 }

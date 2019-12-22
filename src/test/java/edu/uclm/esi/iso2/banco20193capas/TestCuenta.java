@@ -1,5 +1,8 @@
 package edu.uclm.esi.iso2.banco20193capas;
 
+import edu.uclm.esi.iso2.banco20193capas.exceptions.*;
+import edu.uclm.esi.iso2.banco20193capas.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import edu.uclm.esi.iso2.banco20193capas.exceptions.*;
-import edu.uclm.esi.iso2.banco20193capas.model.*;
 import junit.framework.TestCase;
 
 @RunWith(SpringRunner.class)
@@ -88,8 +88,9 @@ public class TestCuenta extends TestCase {
 			cuenta.addTitular(pepe);
 			cuenta.ingresar(-1);
 		} catch (CuentaYaCreadaException e) {
+			fail("No se esperaba esta excepción.");
 		} catch (ImporteInvalidoException e) {
-			fail("Se ha producido ImporteInvalidoException");
+			
 		} 
 	}
 	
