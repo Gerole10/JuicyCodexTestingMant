@@ -100,24 +100,163 @@ public class TestTarjetaDebito extends TestCase {
       } catch (ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
 				| PinInvalidoException e) {
     	  
-      }
+      }      
+    }
+    @Test 
+    public void testSacarDineroExceptionTarjetaBloqueada() throws ImporteInvalidoException, SaldoInsuficienteException {
+    	this.tdAna.setPin(0000);
+        this.cuentaAna.retirar(this.cuentaAna.getSaldo());
+        this.cuentaAna.ingresar(1000);
+        this.tdAna.setActiva(false);
+         try {
+        	 this.tdAna.sacarDinero(0000,100);
+        	 this.tdAna.sacarDinero(0000,100);
+        	 this.tdAna.sacarDinero(0000,100);
+        	 this.tdAna.sacarDinero(0000,100);
+        	 fail("Se espera TarjetaBloqueadaException");
+         } catch (ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+ 				| PinInvalidoException e) {
+         }
     }
     
     @Test
-    public void testComprar() throws ImporteInvalidoException, SaldoInsuficienteException{
+    public void testSacarDineroExceptionPinInvalido() throws ImporteInvalidoException, SaldoInsuficienteException {
+    	this.tdAna.setActiva(true);
+    	this.tdAna.setPin(0000);
+        this.cuentaAna.retirar(this.cuentaAna.getSaldo());
+        this.cuentaAna.ingresar(1000);
+         try {
+        	 this.tdAna.sacarDinero(1234,100);
+        	 this.tdAna.sacarDinero(1234,100);
+        	 this.tdAna.sacarDinero(1234,100);
+        	 this.tdAna.sacarDinero(1234,100);
+        	 fail("Se espera PinInvalidoException");
+         } catch (ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+ 				| PinInvalidoException e) {
+         }
+    }
+    
+    @Test
+    public void testComprarExceptionSaldoInsuficiente() throws ImporteInvalidoException, SaldoInsuficienteException{
+     this.tdAna.setActiva(true);
      this.tdAna.setPin(0000);
      this.cuentaAna.retirar(this.cuentaAna.getSaldo());
      this.cuentaAna.ingresar(1000);
       try {
-    	 this.tdAna.comprar(0000, 250);
-    	 this.tdAna.comprar(0000, 350);
-    	 this.tdAna.comprar(0000, 1250);
-    	 fail("Se espera ImporteInvalidoException");
+    	 this.tdAna.comprar(0000,250);
+    	 this.tdAna.comprar(0000,350);
+    	 this.tdAna.comprar(0000,1250);
+    	 fail("Se espera SaldoInsuficienteException");
     	} catch (ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
-				| PinInvalidoException e) {
-    		
+				| PinInvalidoException e) {	
       }
-      
+    }
+    
+    @Test
+    public void testComprarExceptionTarjetaBloqueada() throws ImporteInvalidoException, SaldoInsuficienteException{
+     this.tdAna.setPin(0000);
+     this.cuentaAna.retirar(this.cuentaAna.getSaldo());
+     this.cuentaAna.ingresar(1000);
+     this.tdAna.setActiva(false);
+      try {
+    	 this.tdAna.comprar(0000,100);
+    	 this.tdAna.comprar(0000,100);
+    	 this.tdAna.comprar(0000,250);
+    	 fail("Se espera TarjetaBloqueadaException");
+    	} catch (ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+				| PinInvalidoException e) {	
+      }
+    }
+    
+    @Test
+    public void testComprarExceptionPinInvalido() throws ImporteInvalidoException, SaldoInsuficienteException{
+     this.tdAna.setActiva(true);
+     this.tdAna.setPin(0000);
+     this.cuentaAna.retirar(this.cuentaAna.getSaldo());
+     this.cuentaAna.ingresar(1000);
+      try {
+    	 this.tdAna.comprar(1234,100);
+    	 this.tdAna.comprar(1234,100);
+    	 this.tdAna.comprar(1234,250);
+    	 fail("Se espera PinInvalidoException");
+    	} catch (ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+				| PinInvalidoException e) {	
+      }
+    }
+    
+    @Test
+    public void testComprarPorInternetExceptionSaldoInsuficiente() throws ImporteInvalidoException, SaldoInsuficienteException {
+     this.tdAna.setActiva(true);
+     this.tdAna.setPin(0000);
+     this.cuentaAna.retirar(this.cuentaAna.getSaldo());
+     this.cuentaAna.ingresar(1000);
+      try {
+       this.tdAna.comprarPorInternet(0000, 500);
+       this.tdAna.comprarPorInternet(0000, 750);
+       fail("Se espera SaldoInsuficienteException");
+    } catch(ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+			| PinInvalidoException e) {	
+    }
+  }
+    
+    @Test
+    public void testComprarPorInternetExceptionPinInvalido() throws ImporteInvalidoException, SaldoInsuficienteException {
+     this.tdAna.setActiva(true);
+     this.tdAna.setPin(0000);
+     this.cuentaAna.retirar(this.cuentaAna.getSaldo());
+     this.cuentaAna.ingresar(1000);
+      try {
+       this.tdAna.comprarPorInternet(1234, 500);
+       this.tdAna.comprarPorInternet(1234, 100);
+       this.tdAna.comprarPorInternet(1234, 100);
+       fail("Se espera PinInvalidoException");
+    } catch(ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+			| PinInvalidoException e) {	
+    }
+  }
+    
+    @Test
+    public void testComprarPorInternetExceptionTarjetaBloqueada() throws ImporteInvalidoException, SaldoInsuficienteException {
+     this.tdAna.setPin(0000);
+     this.cuentaAna.retirar(this.cuentaAna.getSaldo());
+     this.cuentaAna.ingresar(1000);
+     this.tdAna.setActiva(false);
+      try {
+       this.tdAna.comprarPorInternet(0000, 500);
+       this.tdAna.comprarPorInternet(0000, 100);
+       this.tdAna.comprarPorInternet(0000, 100);
+       fail("Se espera TarjetaBloqueadaException");
+    } catch(ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+			| PinInvalidoException e) {	
+    }
+  }
+    
+    @Test
+    public void testComprar() throws ImporteInvalidoException, SaldoInsuficienteException {
+     this.tdAna.setActiva(true);
+     this.tdAna.setPin(0000);
+     this.cuentaAna.retirar(this.cuentaAna.getSaldo());
+     this.cuentaAna.ingresar(1000);
+      try {
+    	  this.tdAna.comprar(0000, 500);
+    	  this.tdAna.comprar(0000, 350);
+    }catch(ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+			| PinInvalidoException e) {
+    }
+  }
+    
+    @Test
+    public void testComprarPorInternet() throws ImporteInvalidoException, SaldoInsuficienteException {
+     this.tdAna.setActiva(true);
+     this.tdAna.setPin(0000);
+     this.cuentaAna.retirar(this.cuentaAna.getSaldo());
+     this.cuentaAna.ingresar(1000);
+      try {
+    	  this.tdAna.comprarPorInternet(0000, 500);
+    	  this.tdAna.comprarPorInternet(0000, 350);
+      } catch(ImporteInvalidoException | SaldoInsuficienteException | TarjetaBloqueadaException
+  			| PinInvalidoException e) {
+      }	
     }
     
 }
