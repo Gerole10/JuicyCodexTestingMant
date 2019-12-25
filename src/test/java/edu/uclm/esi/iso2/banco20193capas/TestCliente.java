@@ -27,7 +27,7 @@ public class TestCliente extends TestCase{
 		Cliente pepe = new Cliente("1234567X","Pepe","Otero");
 		
 		try {
-			pepe.setId((long)12);
+			pepe.setIdentificacion((long)12);
 		}catch(Exception e) {
 			fail("No se esperaba esta excepción");
 		}

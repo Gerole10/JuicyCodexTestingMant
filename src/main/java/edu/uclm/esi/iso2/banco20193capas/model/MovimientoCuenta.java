@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class MovimientoCuenta {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO) 
-	private Long id;
+	private Long identificacion;
 	@ManyToOne
 	private Cuenta cuenta;
 	
@@ -21,27 +21,28 @@ public class MovimientoCuenta {
 	private String concepto;
 	
 	public MovimientoCuenta() {
+		//Constructor por defecto
 	}
 
-	public MovimientoCuenta(Cuenta cuenta, double importe, String concepto) {
+	public MovimientoCuenta(final Cuenta cuenta, final double importe, final String concepto) {
 		this.importe = importe;
 		this.concepto = concepto;
 		this.cuenta = cuenta;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getIdentificacion() {
+		return identificacion;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdentificacion(final Long identificacion) {
+		this.identificacion = identificacion;
 	}
 
 	public Cuenta getCuenta() {
 		return cuenta;
 	}
 
-	public void setCuenta(Cuenta cuenta) {
+	public void setCuenta(final Cuenta cuenta) {
 		this.cuenta = cuenta;
 	}
 
@@ -49,7 +50,7 @@ public class MovimientoCuenta {
 		return importe;
 	}
 
-	public void setImporte(double importe) {
+	public void setImporte(final double importe) {
 		this.importe = importe;
 	}
 
@@ -57,7 +58,7 @@ public class MovimientoCuenta {
 		return concepto;
 	}
 
-	public void setConcepto(String concepto) {
+	public void setConcepto(final String concepto) {
 		this.concepto = concepto;
 	}
 }

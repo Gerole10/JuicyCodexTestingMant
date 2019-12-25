@@ -33,10 +33,10 @@ public class Cliente {
 		this.apellidos = apellidos;
 	}
 
-	public Long getIdentification() {
+	public Long getIdentificacion() {
 		return identificacion;
 	}
-	public void setIdentification(final Long identificacion) {
+	public void setIdentificacion(final Long identificacion) {
 		this.identificacion = identificacion;
 	}
 	public String getNif() {
