@@ -33,10 +33,10 @@ public class TestTarjeta extends TestCase{
 			pepe.insert();
 			cuenta.addTitular(pepe);
 			cuenta.insert();
-			Tarjeta tarjeta = new TarjetaCredito();
+			AbstractTarjeta tarjeta = new TarjetaCredito();
 			tarjeta = cuenta.emitirTarjetaCredito(pepe.getNif(), 5000);
 			
-			tarjeta.setId((long)12);
+			tarjeta.setIdTarjeta((long)12);
 		}catch(CuentaYaCreadaException c) {
 			fail("Cuenta ya creada");
 		}catch(ClienteNoEncontradoException c) {
@@ -58,7 +58,7 @@ public class TestTarjeta extends TestCase{
 			pepe.insert();
 			cuenta.addTitular(pepe);
 			cuenta.insert();
-			Tarjeta tarjeta = new TarjetaCredito();
+			AbstractTarjeta tarjeta = new TarjetaCredito();
 			tarjeta = cuenta.emitirTarjetaCredito(pepe.getNif(), 5000);
 			
 			tarjeta.setActiva(true);
@@ -83,7 +83,7 @@ public class TestTarjeta extends TestCase{
 			pepe.insert();
 			cuenta.addTitular(pepe);
 			cuenta.insert();
-			Tarjeta tarjeta = new TarjetaCredito();
+			AbstractTarjeta tarjeta = new TarjetaCredito();
 			tarjeta = cuenta.emitirTarjetaCredito(pepe.getNif(), 5000);
 			
 			tarjeta.getTitular();
@@ -107,7 +107,7 @@ public class TestTarjeta extends TestCase{
 			pepe.insert();
 			cuenta.addTitular(pepe);
 			cuenta.insert();
-			Tarjeta tarjeta = new TarjetaCredito();
+			AbstractTarjeta tarjeta = new TarjetaCredito();
 			tarjeta = cuenta.emitirTarjetaCredito(pepe.getNif(), 5000);
 			
 			tarjeta.getCuenta();
