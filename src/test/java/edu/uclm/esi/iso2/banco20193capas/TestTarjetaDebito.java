@@ -6,8 +6,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaSinTitularesException;
-import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaYaCreadaException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.ImporteInvalidoException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.PinInvalidoException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.SaldoInsuficienteException;
