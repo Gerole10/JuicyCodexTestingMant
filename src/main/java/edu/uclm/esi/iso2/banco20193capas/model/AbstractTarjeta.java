@@ -18,21 +18,20 @@ import edu.uclm.esi.iso2.banco20193capas.exceptions.TarjetaBloqueadaException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.TokenInvalidoException;
 
 /**
- * Representa una tarjeta bancaria, bien de débito o bien de crédito.
- * Una {@code Tarjeta} está asociada a un {@code Cliente} y a una {@code Cuenta}.
+ * Representa una tarjeta bancaria, bien de débito o bien de crédito. Una
+ * {@code Tarjeta} está asociada a un {@code Cliente} y a una {@code Cuenta}.
  * 
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Tarjeta {
+public abstract class AbstractTarjeta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected Long id;
+	protected Long idTarjeta;
 
 	protected Integer pin;
 	protected Boolean activa;
 	protected Integer intentos;
-	private final static int TRES = 3;
 
 	@Transient
 	protected Compra compra;
@@ -42,8 +41,8 @@ public abstract class Tarjeta {
 
 	@ManyToOne
 	protected Cuenta cuenta;
-	
-	public Tarjeta() {
+
+	public AbstractTarjeta() {
 		activa = true;
 		this.intentos = 0;
 		final SecureRandom dado = new SecureRandom();
@@ -59,7 +58,7 @@ public abstract class Tarjeta {
 			}
 		if (this.pin != pin) {
 			this.intentos++;
-			if (intentos == TRES) {
+			if (intentos == 3) {
 				bloquear();
 			}
 			throw new PinInvalidoException();
@@ -92,8 +91,7 @@ public abstract class Tarjeta {
 	public void confirmarCompraPorInternet(final int token) throws TokenInvalidoException, ImporteInvalidoException,
 			SaldoInsuficienteException, TarjetaBloqueadaException, PinInvalidoException {
 		if (token != this.compra.getToken()) {
-			 this.compra.setImporte(0);
-			 this.compra.setToken(0);
+			 this.compra = null;
 			throw new TokenInvalidoException();
 		}
 		this.comprar(this.pin, this.compra.getImporte());
@@ -101,12 +99,12 @@ public abstract class Tarjeta {
 
 	protected abstract void bloquear();
 
-	public Long getId() {
-		return id;
+	public Long getIdTarjeta() {
+		return idTarjeta;
 	}
 
-	public void setId(final Long idTarjeta) {
-		this.id = idTarjeta;
+	public void setIdTarjeta(final Long idTarjeta) {
+		this.idTarjeta = idTarjeta;
 	}
 
 	public Integer getPin() {
