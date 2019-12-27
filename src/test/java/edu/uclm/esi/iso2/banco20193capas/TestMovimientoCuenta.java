@@ -5,9 +5,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import edu.uclm.esi.iso2.banco20193capas.model.Cliente;
+import edu.uclm.esi.iso2.banco20193capas.model.Cuenta;
+import edu.uclm.esi.iso2.banco20193capas.model.Manager;
+import edu.uclm.esi.iso2.banco20193capas.model.MovimientoCuenta;
 import junit.framework.TestCase;
-import edu.uclm.esi.iso2.banco20193capas.exceptions.*;
-import edu.uclm.esi.iso2.banco20193capas.model.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

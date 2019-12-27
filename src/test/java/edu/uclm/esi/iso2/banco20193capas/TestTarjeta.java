@@ -6,8 +6,15 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import edu.uclm.esi.iso2.banco20193capas.model.*;
-import edu.uclm.esi.iso2.banco20193capas.exceptions.*;
+import edu.uclm.esi.iso2.banco20193capas.exceptions.ClienteNoAutorizadoException;
+import edu.uclm.esi.iso2.banco20193capas.exceptions.ClienteNoEncontradoException;
+import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaSinTitularesException;
+import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaYaCreadaException;
+import edu.uclm.esi.iso2.banco20193capas.model.Cliente;
+import edu.uclm.esi.iso2.banco20193capas.model.Cuenta;
+import edu.uclm.esi.iso2.banco20193capas.model.Manager;
+import edu.uclm.esi.iso2.banco20193capas.model.Tarjeta;
+import edu.uclm.esi.iso2.banco20193capas.model.TarjetaCredito;
 import junit.framework.TestCase;
 
 @RunWith(SpringRunner.class)
