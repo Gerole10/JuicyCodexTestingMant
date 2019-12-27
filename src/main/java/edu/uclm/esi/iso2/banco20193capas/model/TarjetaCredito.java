@@ -1,6 +1,5 @@
 package edu.uclm.esi.iso2.banco20193capas.model;
 
-import java.security.SecureRandom;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,7 +10,7 @@ import edu.uclm.esi.iso2.banco20193capas.exceptions.SaldoInsuficienteException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.TarjetaBloqueadaException;
 
 @Entity
-public class TarjetaCredito extends AbstractTarjeta {
+public class TarjetaCredito extends Tarjeta {
 	private Double credito;
 	
 	public TarjetaCredito() {
@@ -57,19 +56,19 @@ public class TarjetaCredito extends AbstractTarjeta {
 	@Override
 	public Integer comprarPorInternet(final int pin, final double importe) throws TarjetaBloqueadaException, PinInvalidoException, SaldoInsuficienteException, ImporteInvalidoException {
 		comprobar(pin);
-		this.intentos = 0;
+		//this.intentos = 0;
 		if (importe>getCreditoDisponible()) {
 			throw new SaldoInsuficienteException();
 		}
 		if (importe<=0) {
 			throw new ImporteInvalidoException(importe);
 		}
-		final SecureRandom dado = new SecureRandom();
-		int token = 0;
-		for (int i=0; i<=3; i++) {
-			token = (int) (token  + dado.nextInt(10) * Math.pow(10, i));
-		}
-		token = 1234;
+//		final SecureRandom dado = new SecureRandom();
+//		int token = 0;
+//		for (int i=0; i<=3; i++) {
+//			token = (int) (token  + dado.nextInt(10) * Math.pow(10, i));
+//		}
+		final int token = 1234;
 		this.compra = new Compra(importe, token);
 		return token;
 	}
@@ -105,7 +104,7 @@ public class TarjetaCredito extends AbstractTarjeta {
 	
 	public void liquidar() {
 		double gastos = 0.0;
-		final List<MovimientoTarjetaCredito> mMovimientoT = Manager.getMovimientoTarjetaCreditoDAO().findByTarjetaId(this.idTarjeta);
+		final List<MovimientoTarjetaCredito> mMovimientoT = Manager.getMovimientoTarjetaCreditoDAO().findByTarjetaId(this.id);
 		for (final MovimientoTarjetaCredito movimientoT : mMovimientoT) {
 			if (!movimientoT.isLiquidado()) {
 				gastos = gastos+movimientoT.getImporte();
@@ -122,7 +121,7 @@ public class TarjetaCredito extends AbstractTarjeta {
 	
 	public Double getCreditoDisponible() {
 		double gastos = 0.0;
-		final List<MovimientoTarjetaCredito> mMovimientoT = Manager.getMovimientoTarjetaCreditoDAO().findByTarjetaId(this.idTarjeta);
+		final List<MovimientoTarjetaCredito> mMovimientoT = Manager.getMovimientoTarjetaCreditoDAO().findByTarjetaId(this.id);
 		for (final MovimientoTarjetaCredito movimientoT : mMovimientoT) {
 			if (!movimientoT.isLiquidado()) {
 				gastos = gastos + movimientoT.getImporte();
