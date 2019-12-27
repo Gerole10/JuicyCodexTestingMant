@@ -35,7 +35,7 @@ public class TestMovimientoCuenta extends TestCase{
 	public void testSetId() {
 		try {
 			MovimientoCuenta movi = new MovimientoCuenta(cuenta,100.0,"Prueba");
-			movi.setId((long) 12);
+			movi.setIdentificacion((long) 12);
 		}catch(Exception e) {
 			fail("No se esperaba que saltase ninguna excepción");
 		}
