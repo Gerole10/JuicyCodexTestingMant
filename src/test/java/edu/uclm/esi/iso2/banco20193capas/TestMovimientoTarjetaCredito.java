@@ -31,7 +31,7 @@ public class TestMovimientoTarjetaCredito extends TestCase{
 			TarjetaCredito tarjeta = new TarjetaCredito();
 			
 			MovimientoTarjetaCredito movi = new MovimientoTarjetaCredito(tarjeta,200.0,"Prueba");
-			movi.setId((long)13);
+			movi.setIdentificacion((long)13);
 		}catch(Exception e) {
 			fail("No se esperaba esta excepción");
 		}
